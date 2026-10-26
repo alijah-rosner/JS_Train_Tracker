@@ -1,0 +1,107 @@
+/* Everything scales with the window, like the QPainter version:
+   the bottom bar is 20% of the height and the rows share the rest. */
+:root {
+  --rows: 2; /* keep in sync with LINES.length */
+  --bar: 20vh;
+  --row: calc((100vh - var(--bar)) / var(--rows));
+  --pad: calc(var(--row) * 0.18);
+  --white: #ffffff;
+  --grey: #9a9a9a;
+  --divider: #2e2e2e;
+}
+
+* { box-sizing: border-box; margin: 0; }
+
+html, body, #root {
+  height: 100%;
+  background: #000;
+  color: var(--white);
+  overflow: hidden;
+  font-family: "Helvetica Neue", Helvetica, Arial, "Liberation Sans", sans-serif;
+  font-weight: 700;
+  cursor: default;
+  user-select: none;
+}
+
+.board {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* --- train rows ---------------------------------------------------------- */
+.row {
+  height: var(--row);
+  display: flex;
+  align-items: center;
+  gap: var(--pad);
+  padding: 0 var(--pad);
+  border-bottom: max(1px, 0.6vh) solid var(--divider);
+}
+
+.bullet {
+  flex: none;
+  width: calc(var(--row) * 0.62);
+  height: calc(var(--row) * 0.62);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: calc(var(--row) * 0.62 * 0.66);
+  line-height: 1;
+  padding-top: 0.04em; /* optical centering of the letter */
+}
+
+.where {
+  flex: 1;
+  min-width: 0;
+  white-space: nowrap;
+}
+.where > * { overflow: hidden; text-overflow: ellipsis; }
+
+.dest { font-size: calc(var(--row) * 0.30); line-height: 1.2; }
+.station {
+  font-size: calc(var(--row) * 0.15);
+  font-weight: 500;
+  color: var(--grey);
+  margin-top: calc(var(--row) * 0.04);
+}
+
+.when {
+  flex: none;
+  width: 34vw;
+  text-align: right;
+  white-space: nowrap;
+}
+.first { line-height: 1; }
+.num { font-size: calc(var(--row) * 0.42); }
+.unit { font-size: calc(var(--row) * 0.20); }
+.now { font-size: calc(var(--row) * 0.34); }
+.empty { font-size: calc(var(--row) * 0.30); color: var(--grey); }
+.then {
+  font-size: calc(var(--row) * 0.15);
+  font-weight: 500;
+  color: var(--grey);
+  margin-top: calc(var(--row) * 0.04);
+}
+
+/* --- bottom bar ---------------------------------------------------------- */
+.bar {
+  height: var(--bar);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 calc(var(--bar) * 0.45);
+  white-space: nowrap;
+}
+.clock, .weather {
+  display: flex;
+  align-items: center;
+  gap: calc(var(--bar) * 0.225);
+}
+.time { font-size: calc(var(--bar) * 0.42); }
+.temp { font-size: calc(var(--bar) * 0.46); }
+.sub {
+  font-size: calc(var(--bar) * 0.26);
+  font-weight: 500;
+  color: var(--grey);
+}
